@@ -452,16 +452,21 @@ double pEuler(LagrangianPoint *pt, double tstart, double tend, int num_particles
                 pt->X[ii] = pt->X[ii] - pt->V[ii] * h;}
             	
                 HitWall_Index = HitWall_Index + 1;
-                fprintf(stderr, "%2.3e \n", StartTime);
+                /*fprintf(stderr, "%2.3e \n", StartTime);*/
             	ParticleHitWall[HitWall_Index][0] = HitWall_Index;
             	ParticleHitWall[HitWall_Index][1] = pt->LeftDomainTime;
 				ParticleHitWall[HitWall_Index][2] = pt->X[0];
             	ParticleHitWall[HitWall_Index][3] = pt->X[1];
             	ParticleHitWall[HitWall_Index][4] = pt->X[2];
-                ParticleHitWall[HitWall_Index][5] = StartTime;
-                ParticleHitWall[HitWall_Index][6] = x1;
-                ParticleHitWall[HitWall_Index][7] = x2;
-                ParticleHitWall[HitWall_Index][8] = x3;
+                ParticleHitWall[HitWall_Index][5] = pt->ParticleStartTime;
+                /*ParticleHitWall[HitWall_Index][5] = StartTime;*/
+                ParticleHitWall[HitWall_Index][6] = pt->InitialPosition[0];
+                ParticleHitWall[HitWall_Index][7] = pt->InitialPosition[1];
+                ParticleHitWall[HitWall_Index][8] = pt->InitialPosition[2];
+                ParticleHitWall[HitWall_Index][9] = pt->ParticleIndex;
+
+
+                /*fprintf(stderr, "Initial Position: %2.3e \n", pt->InitialPosition[1]);*/
                 /*fprintf(stderr, "num_particles: %d \n", num_particles);*/
             return pt->LeftDomainTime;
         }

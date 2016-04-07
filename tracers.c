@@ -71,8 +71,15 @@ void GenerateStaggeredRelease(void) {
 			nnode->slide.StartTime = Output_TStart;
 			nnode->slide.StopTime = fmin(Output_TEnd, nnode->slide.StartTime + Trace_IntTLength);
 			nnode->slide.Status = UNLAUNCHED;
-			for(ii = 0; ii < 3; ii++) 
+			for(ii = 0; ii < 3; ii++) {
 				nnode->pt.X[ii] = Trace_ReleasePoints[ss].X[ii];
+				nnode->pt.InitialPosition[ii] = Trace_ReleasePoints[ss].X[ii];}
+			nnode->pt.ParticleIndex = ss;
+			nnode->pt.ParticleStartTime = nnode->slide.StartTime;
+			fprintf(stderr, "nnode->slide.StartTime: %2.3e \n", nnode->slide.StartTime);
+			/*fprintf(stderr, "nnode->pt.X[1] %2.3e \n", nnode->pt.X[1]);*/
+			/*fprintf(stderr, "InitialPosition[1] %2.3e \n", nnode->pt.InitialPosition[1]);*/
+			/*fprintf(stderr, "ParticleIndex: %i \n", nnode->pt.ParticleIndex);*/
 			nnode->pt.LeftDomain = 0;
 			nnode->pt.ElementIndex = Trace_ReleasePoints[ss].ElementIndex;
 			nnode->pt.Scalar = 0.0;
@@ -225,8 +232,12 @@ void GenerateStaggeredRelease(void) {
 									nnode->slide.StartTime = tii;
 									nnode->slide.StopTime = fmin(Output_TEnd, nnode->slide.StartTime + Trace_IntTLength);
 									nnode->slide.Status = UNLAUNCHED;
-									for(ii = 0; ii < 3; ii++) 
+									for(ii = 0; ii < 3; ii++) {
 										nnode->pt.X[ii] = Trace_ReleasePoints[ss].X[ii];
+										nnode->pt.InitialPosition[ii] = Trace_ReleasePoints[ss].X[ii];}
+									fprintf(stderr, "nnode->slide.StartTime: %2.3e \n", nnode->slide.StartTime);
+									nnode->pt.ParticleStartTime = nnode->slide.StartTime;	
+									nnode->pt.ParticleIndex = ss;	
 									nnode->pt.LeftDomain = 0;
 									nnode->pt.ElementIndex = Trace_ReleasePoints[ss].ElementIndex;
 									nnode->pt.Scalar = 0.0;
@@ -266,8 +277,11 @@ void GenerateStaggeredRelease(void) {
 						nnode->slide.StartTime = -N/M;
 						nnode->slide.StopTime = fmin(Output_TEnd, nnode->slide.StartTime + Trace_IntTLength);
 						nnode->slide.Status = UNLAUNCHED;
-						for(ii = 0; ii < 3; ii++) 
+						for(ii = 0; ii < 3; ii++){ 
 							nnode->pt.X[ii] = Trace_ReleasePoints[ss].X[ii];
+							nnode->pt.InitialPosition[ii] = Trace_ReleasePoints[ss].X[ii];}
+						nnode->pt.ParticleStartTime = nnode->slide.StartTime;
+						nnode->pt.ParticleIndex = ss;
 						nnode->pt.LeftDomain = 0;
 						nnode->pt.ElementIndex = Trace_ReleasePoints[ss].ElementIndex;
 						nnode->pt.Scalar = 0.0;
@@ -367,11 +381,14 @@ void GenerateStaggeredRelease(void) {
 										nnode->slide.StartTime = tii;
 										nnode->slide.StopTime = fmin(Output_TEnd, nnode->slide.StartTime + Trace_IntTLength);
 										nnode->slide.Status = UNLAUNCHED;
-										for(ii = 0; ii < 3; ii++) 
+										for(ii = 0; ii < 3; ii++) {
 											nnode->pt.X[ii] = Trace_ReleasePoints[ss].X[ii];
+											nnode->pt.InitialPosition[ii] = Trace_ReleasePoints[ss].X[ii];}
+										nnode->pt.ParticleIndex = ss;	
 										nnode->pt.LeftDomain = 0;
 										nnode->pt.ElementIndex = Trace_ReleasePoints[ss].ElementIndex;
 										nnode->pt.Scalar = 0.0;
+										fprintf(stderr, "nnode->slide.StartTime: %2.3e \n", nnode->slide.StartTime);
 										if(Particle_Radius > TINY) {
 											if(Particle_ICType == 1) /* Set initial velocity of particle to fluid velocity */
 												GetVelocity(nnode->slide.StartTime, &(nnode->pt), nnode->pt.V);

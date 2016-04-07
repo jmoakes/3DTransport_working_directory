@@ -22,11 +22,14 @@ typedef struct _LagrangianPoint {
 	double X[3];
 	double V[3];
     double vorticity[3];
+    double InitialPosition[3];
 	int    ElementIndex;
 	int    AuxElementIndex;
 	int    LeftDomain;
+	int    ParticleIndex;
 	double LeftDomainTime;
 	double Scalar;
+	double ParticleStartTime;
 } LagrangianPoint;
 
 typedef struct _FTLEPoint {

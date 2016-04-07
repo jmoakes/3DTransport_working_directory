@@ -68,7 +68,7 @@ int main (int argc, const char * argv[]) {
 
 	ParticleHitWall = (double **) calloc (40000, sizeof(double*));
     for (ii=0; ii<40000; ii++){
-		ParticleHitWall[ii] = (double*) calloc(9, sizeof(double)); 
+		ParticleHitWall[ii] = (double*) calloc(10, sizeof(double)); 
 	}
 
 	
@@ -349,10 +349,11 @@ int main (int argc, const char * argv[]) {
 									t1 = fmax(rnode->slide.StartTime, Data_LoadedTMin);
 									release_time = t1;
 									time_release[0][num_particles] = num_particles;
-									time_release[1][num_particles] = release_time;
+									time_release[1][num_particles] = rnode->pt.ParticleStartTime;
 									time_release[2][num_particles] = rnode->pt.X[0];
 									time_release[3][num_particles] = rnode->pt.X[1];
 									time_release[4][num_particles] = rnode->pt.X[2];
+									/*fprintf(stderr, "Initial Position: %2.3e \n", rnode->pt.InitialPosition[1]);*/
 									/*fprintf(stderr, "Trace_ReleasePoints %2.3e", Trace_ReleasePoints[ss].X[1]);*/
 								}
 								/* Integrate point forward */
@@ -373,6 +374,8 @@ int main (int argc, const char * argv[]) {
 									if((Output_TStart + ii*Output_TDelta > t1 + TINY) && (Output_TStart + ii*Output_TDelta <= t2 + TINY))
 										outputcount++;
 								/* Break up integration if needed */
+								/*fprintf(stderr, "outputcount: %d \n", outputcount);
+								fprintf(stderr, "Trace_ReleasePoints %d \n", Trace_ReleasePoints);*/
 								if(outputcount == 0)  /* not needed */
 									Advect(&rnode->pt, rnode->slide.StartTime, t1, t2, num_particles, rnode->pt.X[0], rnode->pt.X[1], rnode->pt.X[2]);
 								else { /* break up integration */
@@ -455,6 +458,7 @@ int main (int argc, const char * argv[]) {
 								for(ii = 0; ii < Output_TRes; ii++)
 									if((Output_TStart + ii*Output_TDelta > t1 + TINY) && (Output_TStart + ii*Output_TDelta <= t2 + TINY))
 										outputcount++;
+
                                 /* Determine first output time */
                                 for(ii = 0; ii < Output_TRes; ii++) {
                                     firstoutputtime = Output_TStart + ii*Output_TDelta;
@@ -599,7 +603,8 @@ int main (int argc, const char * argv[]) {
     	fprintf(fp3, "%5.5e \t", ParticleHitWall[i][6]);
     	fprintf(fp3, "%5.5e \t", ParticleHitWall[i][7]);
     	fprintf(fp3, "%5.5e \t", ParticleHitWall[i][8]);
-    	fprintf(stderr, "%5.3e \n", ParticleHitWall[i][8]);
+    	/*fprintf(stderr, "%5.3e \n", ParticleHitWall[i][8]);*/
+    	fprintf(fp3, "%G", ParticleHitWall[i][9]);
     	fprintf(fp3, "\n");
     }
     fclose(fp3);
